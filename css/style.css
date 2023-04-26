@@ -140,3 +140,11 @@ button{
     display: none;
 }
 
+.perso {
+    font-size: 2rem;
+}
+
+.stop{
+    pointer-events: none;
+}
+

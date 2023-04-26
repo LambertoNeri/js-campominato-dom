@@ -1,7 +1,5 @@
-
-
-
-
+const punteggio = document.querySelector('.punteggio')
+const perso = document.querySelector('.perso')
 const eleGrid = document.querySelector('.container');
 const facile = document.querySelector('.facile');
 const medio = document.querySelector('.medio');
@@ -9,7 +7,8 @@ const hard = document.querySelector('.difficile');
 const play = document.querySelector('#play');
 const scritta = document.querySelector('.scritta');
 const dropdown = document.querySelector('#dropdownNuovo');
-var mine = [];
+let mine = [];
+let counter = 0
  
 
 let listCells = 0;
@@ -17,8 +16,12 @@ let listCellsHard = 0;
 let listCellsMedium = 0;
 
 play.addEventListener('click',
-
+    
     function(){
+        perso.innerHTML = ''
+        punteggio.innerHTML = ''
+        counter = 0
+        eleGrid.classList.remove('stop')
         var getValue = document.getElementById('dropdownNuovo').selectedOptions[0].value;
         if (getValue == 1) {
             ease();
@@ -33,7 +36,7 @@ play.addEventListener('click',
 
     function ease() {
         scritta.classList.add("hide");
-        mine = [getRandom(1, 100, 16)]
+        mine = getRandom(1, 100, 16)    
         console.log ('dentro', mine )
         cancelling();
         createGrid(100, eleGrid);
@@ -54,23 +57,6 @@ play.addEventListener('click',
     }
 
 
-
-
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show")
-};
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show')
-            };
-        };
-    };
-};
 
 
 
@@ -111,18 +97,21 @@ function createGrid(numCells, eleContainer) {
                 cell.addEventListener('click',
                     function colorCell() {
                     console.log(this);
+                    console.log (mine);
 
-                    if(mine.includes(i + 1)) {
+                        if(mine.includes(i + 1)) {
                         console.log('Hai perso');
                         this.classList.toggle('clickedBomb')
-                       
-                    } else {
+                        perso.innerHTML = (` ${'HAI PERSO!! il tuo punteggio è'} ${counter} `)
+                        eleGrid.classList.add('stop')
+                        } else {
                         this.classList.toggle('clicked')
-                        console.log (mine)
+                        counter = counter + 1
+                        punteggio.innerHTML = (` ${'il tuo punteggio è'} ${counter} `)
+                        }   
+                        
                     }
-                
-                    
-                    });
+                );
             };
         } 
 
@@ -136,9 +125,18 @@ function createGrid(numCells, eleContainer) {
                 const cell = listCellsMedium[i];
                 cell.addEventListener('click',
                     function colorCell() {
-                        console.log(this);
-                        this.classList.toggle('clicked');
-                    })
+                        if(mine.includes(i + 1)) {
+                            console.log('Hai perso');
+                            this.classList.toggle('clickedBomb')
+                            perso.innerHTML = (` ${'HAI PERSO!! il tuo punteggio è'} ${counter} `)
+                            eleGrid.classList.add('stop')
+                            } else {
+                            this.classList.toggle('clicked')
+                            counter = counter + 1
+                            punteggio.innerHTML = (` ${'il tuo punteggio è'} ${counter} `)
+                            } 
+                    }
+                )
             }
         }
     } else if (numCells == 49) {
@@ -150,9 +148,18 @@ function createGrid(numCells, eleContainer) {
                 const cell = listCellsHard[i];
                 cell.addEventListener('click',
                     function colorCell() {
-                        console.log(this);
-                        this.classList.toggle('clicked');
-                    });
+                        if(mine.includes(i + 1)) {
+                            console.log('Hai perso');
+                            this.classList.toggle('clickedBomb')
+                            perso.innerHTML = (` ${'HAI PERSO!! il tuo punteggio è'} ${counter} `)
+                            eleGrid.classList.add('stop')
+                            } else {
+                            this.classList.toggle('clicked')
+                            counter = counter + 1
+                            punteggio.innerHTML = (` ${'il tuo punteggio è'} ${counter} `)
+                            } 
+                    }
+                );
             }
         }
 
