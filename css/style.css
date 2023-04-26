@@ -78,6 +78,10 @@ button{
 	background-color: #3498DB;
 }
 
+.clickedBomb {
+	background-color: #db3434;
+}
+
 
 .dropbtn {
     background-color: #3498DB;

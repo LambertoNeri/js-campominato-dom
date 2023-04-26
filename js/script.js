@@ -8,7 +8,8 @@ const medio = document.querySelector('.medio');
 const hard = document.querySelector('.difficile');
 const play = document.querySelector('#play');
 const scritta = document.querySelector('.scritta');
-const dropdown = document.querySelector('#dropdownNuovo')
+const dropdown = document.querySelector('#dropdownNuovo');
+var mine = [];
  
 
 let listCells = 0;
@@ -16,6 +17,7 @@ let listCellsHard = 0;
 let listCellsMedium = 0;
 
 play.addEventListener('click',
+
     function(){
         var getValue = document.getElementById('dropdownNuovo').selectedOptions[0].value;
         if (getValue == 1) {
@@ -26,41 +28,30 @@ play.addEventListener('click',
             hardole();
         }
         console.log (getValue) 
-    } 
+    }  
 )   
 
-//facile.addEventListener('click',
     function ease() {
         scritta.classList.add("hide");
+        mine = [getRandom(1, 100, 16)]
+        console.log ('dentro', mine )
         cancelling();
         createGrid(100, eleGrid);
-       
     }
-//);
 
-
-
-
-
-//medio.addEventListener('click',
     function mediume() {
         scritta.classList.add("hide");
+        getRandom(1, 81, 16)
         cancelling();
         createGrid(81, eleGrid);
-        
     }
-//);
 
-
-
-//hard.addEventListener('click',
     function hardole() {
         scritta.classList.add("hide");
+        getRandom(1, 49, 16)
         cancelling();
         createGrid(49, eleGrid);
-        
     }
-//);
 
 
 
@@ -116,13 +107,25 @@ function createGrid(numCells, eleContainer) {
             const listCells = document.querySelectorAll('.cell');
             for (let i = 0; i < listCells.length; i++) {
                 const cell = listCells[i];
+
                 cell.addEventListener('click',
                     function colorCell() {
-                        console.log(this);
-                        this.classList.toggle('clicked');
-                    })
+                    console.log(this);
+
+                    if(mine.includes(i)) {
+                        console.log('Hai perso');
+                        this.classList.toggle('clickedBomb')
+                       
+                    } else {
+                        this.classList.toggle('clicked')
+                        console.log (mine)
+                    }
+                
+                    
+                    });
             };
-        }
+        } 
+
     } else if (numCells == 81) {
 
         for (let i = 0; i < numCells; i++) {
@@ -154,11 +157,23 @@ function createGrid(numCells, eleContainer) {
         }
 
     };
-
-
 }
 
 
-/* posso semplificare ancora, creare variabile che cambia rispetto alla lungezza della chiamata celle (esempio 100 celle = long, 81 celle = medium, 49 celle = short)
 
-dopo cambio il mio create grid con queste variabili, infine chiedo all'addeventlistener di creare celle diverse hard-medium-easy guardando questa variabile */
+
+
+function getRandom (min, max, numbers) {
+    var numbers = []
+    while (numbers.length < 16) {
+      let randomNumber = Math.floor(Math.random() * (max - min + 1) ) + min;
+      if (!numbers.includes(randomNumber)) {
+    numbers.push(randomNumber);
+  }
+}
+return (numbers)
+}
+
+
+
+
