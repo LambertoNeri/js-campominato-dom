@@ -112,7 +112,7 @@ function createGrid(numCells, eleContainer) {
                     function colorCell() {
                     console.log(this);
 
-                    if(mine.includes(i)) {
+                    if(mine.includes(i + 1)) {
                         console.log('Hai perso');
                         this.classList.toggle('clickedBomb')
                        
